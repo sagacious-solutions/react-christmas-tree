@@ -1,6 +1,6 @@
 import PatternButton from "./components/PatternButton"
 
-import axios, { isCancel, AxiosError } from 'axios';
+import axios from 'axios';
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
 
