@@ -15,13 +15,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 // Updated
 import Palette from '@material-ui/icons/Palette';
 import TextureIcon from '@mui/icons-material/Texture';
+
+// Pages
 import SelectPattern from './pages/SelectPattern';
+import SetSolidPreset from './pages/SetSolidPreset';
 
 const drawerWidth = 240;
 
@@ -88,9 +89,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navigation() {
+    var defaultLandingPage = <SelectPattern />;
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [page, setPage] = React.useState(defaultLandingPage)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -98,6 +101,10 @@ export default function Navigation() {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const displayPage = () => {
+        return page;
     };
 
     return (
@@ -146,11 +153,15 @@ export default function Navigation() {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button key={"choosePattern"}>
+                    <ListItem button key={"choosePattern"} onClick={() => {
+                        setPage(<SelectPattern />);
+                    }}>
                         <ListItemIcon><TextureIcon /></ListItemIcon>
                         <ListItemText primary={"Choose Pattern"} />
                     </ListItem>
-                    <ListItem button key={"choosePresetColor"}>
+                    <ListItem button key={"choosePresetColor"} onClick={() => {
+                        setPage(<SetSolidPreset />);
+                    }}>
                         <ListItemIcon><Palette /></ListItemIcon>
                         <ListItemText primary={"Choose Preset Color"} />
                     </ListItem>
@@ -158,7 +169,7 @@ export default function Navigation() {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <SelectPattern />
+                {displayPage()}
             </main>
         </div>
     );
