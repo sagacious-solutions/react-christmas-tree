@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function PatternButton(props) {
     const classes = useStyles();
     return (
