@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PatternButton(props) {
     const classes = useStyles();
     return (
-        <ColorButton variant="contained" color="primary" className={classes.margin}>
+        <ColorButton variant="contained" color="primary" className={classes.margin} onClick={props.onClick}>
             {props.buttonText}
         </ColorButton>
 
