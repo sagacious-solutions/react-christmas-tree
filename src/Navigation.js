@@ -20,8 +20,8 @@ import MailIcon from '@material-ui/icons/Mail';
 
 // Updated
 import Palette from '@material-ui/icons/Palette';
+import TextureIcon from '@mui/icons-material/Texture';
 import SelectPattern from './pages/SelectPattern';
-
 
 const drawerWidth = 240;
 
@@ -146,21 +146,14 @@ export default function Navigation() {
                 </div>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    <ListItem button key={"choosePattern"}>
+                        <ListItemIcon><TextureIcon /></ListItemIcon>
+                        <ListItemText primary={"Choose Pattern"} />
+                    </ListItem>
+                    <ListItem button key={"choosePresetColor"}>
+                        <ListItemIcon><Palette /></ListItemIcon>
+                        <ListItemText primary={"Choose Preset Color"} />
+                    </ListItem>
                 </List>
             </Drawer>
             <main className={classes.content}>
