@@ -20,6 +20,8 @@ import MailIcon from '@material-ui/icons/Mail';
 
 // Updated
 import Palette from '@material-ui/icons/Palette';
+import SelectPattern from './pages/SelectPattern';
+
 
 const drawerWidth = 240;
 
@@ -120,7 +122,7 @@ export default function Navigation() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Christmas Tree Interface 
+                        Christmas Tree Interface
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -163,7 +165,7 @@ export default function Navigation() {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-
+                <SelectPattern />
             </main>
         </div>
     );
