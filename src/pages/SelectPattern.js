@@ -5,7 +5,7 @@ function SelectPattern() {
     return (
         <div className="SelectPattern">
             This is the select pattern page.
-            <PatternButton />
+            <PatternButton buttonText="Rainbow Cycle" />
         </div >
     );
 }
