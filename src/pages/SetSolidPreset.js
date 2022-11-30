@@ -97,7 +97,13 @@ function postColorRequest(color) {
 
 let generateButtons = () => {
     let html = buttonDetails.map((button) => {
-        return <PresetColorButton {...button} onClick={postColorRequest} />;
+        return (
+            <PresetColorButton
+                key={button.colorName}
+                {...button}
+                onClick={postColorRequest}
+            />
+        );
     });
 
     return html;

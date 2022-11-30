@@ -167,7 +167,7 @@ export default function Navigation() {
             <ListItemIcon>
               <TextureIcon />
             </ListItemIcon>
-            <ListItemText primary={"Choose Pattern"} />
+            <ListItemText primary={"Animated Patterns"} />
           </ListItem>
           <ListItem
             button
@@ -179,7 +179,7 @@ export default function Navigation() {
             <ListItemIcon>
               <Palette />
             </ListItemIcon>
-            <ListItemText primary={"Choose Preset Color"} />
+            <ListItemText primary={"Preset Colors"} />
           </ListItem>
         </List>
       </Drawer>
