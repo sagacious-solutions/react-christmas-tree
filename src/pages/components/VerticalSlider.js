@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
 
-export default function VerticalSlider() {
+export default function VerticalSlider(props) {
     function preventHorizontalKeyboardNavigation(event) {
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
             event.preventDefault();
@@ -19,10 +19,11 @@ export default function VerticalSlider() {
                     },
                 }}
                 orientation="vertical"
-                defaultValue={30}
-                aria-label="Temperature"
+                defaultValue={127}
                 valueLabelDisplay="auto"
                 onKeyDown={preventHorizontalKeyboardNavigation}
+                min={props.min}
+                max={props.max}
             />
         </Box>
     );

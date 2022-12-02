@@ -28,7 +28,6 @@ function CreateColorSliders() {
     return (
         <div className={componentClass}>
             <RgbSlider />
-
         </div>
     );
 }
