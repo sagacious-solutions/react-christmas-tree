@@ -1,10 +1,11 @@
 import * as React from 'react';
 import VerticalSlider from "./VerticalSlider"
 import { useState, useEffect } from 'react';
+import "./RgbSlider.css"
 
 let classNames = require('classnames');
 
-export default function RgbSlider() {
+export default function RgbSlider(props) {
     let sldrGrpClass = classNames({ 'sliderGroup': true })
     const sliderSettings = { "min": 0, "max": 255 }
     const headerCss = { "color": "black" }
@@ -12,6 +13,8 @@ export default function RgbSlider() {
     const [green, setGreen] = useState(127)
     const [blue, setBlue] = useState(127)
     let bottomString = `This is the current color (${red}, ${green}, ${blue}).`
+
+    useEffect(() => { props.onChange([red, green, blue]) }, [red, green, blue])
 
     return (
         <div>
