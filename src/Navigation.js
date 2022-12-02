@@ -19,10 +19,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 // Updated
 import Palette from "@material-ui/icons/Palette";
 import TextureIcon from "@mui/icons-material/Texture";
+import TuneIcon from '@mui/icons-material/Tune';
 
 // Pages
 import SelectPattern from "./pages/SelectPattern";
 import SetSolidPreset from "./pages/SetSolidPreset";
+import CreateColorSliders from "./pages/CreateColorSliders";
 
 const drawerWidth = 240;
 
@@ -180,6 +182,18 @@ export default function Navigation() {
               <Palette />
             </ListItemIcon>
             <ListItemText primary={"Preset Colors"} />
+          </ListItem>
+          <ListItem
+            button
+            key={"CreateColorSliders"}
+            onClick={() => {
+              setPage(<CreateColorSliders />);
+            }}
+          >
+            <ListItemIcon>
+              <TuneIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Create Color"} />
           </ListItem>
         </List>
       </Drawer>
