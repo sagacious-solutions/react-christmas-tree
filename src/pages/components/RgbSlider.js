@@ -12,7 +12,6 @@ export default function RgbSlider(props) {
     const [red, setRed] = useState(127)
     const [green, setGreen] = useState(127)
     const [blue, setBlue] = useState(127)
-    let bottomString = `This is the current color (${red}, ${green}, ${blue}).`
 
     useEffect(() => { props.onChange([red, green, blue]) }, [red, green, blue])
 
@@ -24,7 +23,6 @@ export default function RgbSlider(props) {
                 <VerticalSlider setColor={setGreen} {...sliderSettings} />
                 <VerticalSlider setColor={setBlue} {...sliderSettings} />
             </div>
-            <div>{bottomString}</div >
         </div>);
 }
 

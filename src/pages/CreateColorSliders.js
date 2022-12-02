@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 
 import RgbSlider from "./components/RgbSlider";
 import BasicButton from "./components/BasicButton";
+import "./CreateColorSlider.css"
+
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
-const buttonStyle = { "margin-left": "20%", "margin-top": "5%", "width": "15%" }
+const buttonStyle = {}
 
 function postColorRequest(color) {
     axios
@@ -21,16 +23,23 @@ function postColorRequest(color) {
 }
 
 function CreateColorSliders() {
-    let componentClass = classNames({ 'mainComponent': true })
-    const [rgb, setRgb] = useState([0, 0, 0])
+    const [rgb, setRgb] = useState([0, 0, 0]);
+    const [socketEnabled, setSocketEnabled] = useState(false);
+    let bttnGrpClass = classNames({ 'buttonGroup': true });
+    let componentClass = classNames({ 'mainComponent': true });
+    let liveButtonClass = classNames({ "socketEnabled": socketEnabled });
 
-    useEffect(() => { }, [rgb])
+    // useEffect(() => { }, [rgb, socketEnabled])
 
+    const connectionButtonText = socketEnabled ? `Tree set to RGB(${rgb[0]},${rgb[1]},${rgb[2]})` : "Start Live Connection";
 
     return (
         <div className={componentClass}>
             <RgbSlider onChange={setRgb} />
-            <BasicButton onClick={() => postColorRequest(rgb)} buttonText="Set Color" style={{ ...buttonStyle, "backgroundColor": `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` }} />
+            <div className={bttnGrpClass}>
+                <BasicButton onClick={() => postColorRequest(rgb)} buttonText={`Set Tree to RGB(${rgb[0]},${rgb[1]},${rgb[2]})`} style={{ ...buttonStyle, "backgroundColor": `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` }} />
+                <BasicButton className={liveButtonClass} onClick={() => { setSocketEnabled(!socketEnabled) }} buttonText={connectionButtonText} style={{ "backgroundColor": socketEnabled ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : "green" }} />
+            </div>
         </div>
     );
 }
