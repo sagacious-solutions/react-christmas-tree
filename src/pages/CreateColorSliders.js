@@ -7,7 +7,6 @@ import RgbSlider from "./components/RgbSlider";
 import BasicButton from "./components/BasicButton";
 import "./CreateColorSlider.css"
 
-
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
 const buttonStyle = {}
@@ -31,9 +30,6 @@ function CreateColorSliders() {
     const setColorButton = <BasicButton onClick={() => postColorRequest(rgb)} buttonText={`Set Tree to RGB(${rgb[0]},${rgb[1]},${rgb[2]})`} style={{ ...buttonStyle, "backgroundColor": `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` }} />
     const disconnectTreeButton = <BasicButton onClick={() => { setSocketEnabled(false) }} buttonText={"Disconnect from tree."} style={{ ...buttonStyle, "backgroundColor": `black` }} />
     const leftButton = socketEnabled ? disconnectTreeButton : setColorButton
-
-    // useEffect(() => { }, [rgb, socketEnabled])
-
     const connectionButtonText = socketEnabled ? `Tree set to RGB(${rgb[0]},${rgb[1]},${rgb[2]})` : "Start Live Connection";
 
     return (
