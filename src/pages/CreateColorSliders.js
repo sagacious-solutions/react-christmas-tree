@@ -1,4 +1,9 @@
 import axios from "axios";
+import classNames from "classnames";
+
+import RgbSlider from "./components/RgbSlider";
+import "./CreateColorSliders.css"
+
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
 function postPatternRequest(pattern) {
@@ -19,9 +24,11 @@ function postTurnOffRequest() {
 }
 
 function CreateColorSliders() {
+    let componentClass = classNames({ 'mainComponent': true })
     return (
-        <div>
-            Color Sliders go Here.
+        <div className={componentClass}>
+            <RgbSlider />
+
         </div>
     );
 }
