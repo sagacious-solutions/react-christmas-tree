@@ -1,5 +1,7 @@
 import axios from "axios";
 import classNames from "classnames";
+import { useState } from 'react';
+
 
 import RgbSlider from "./components/RgbSlider";
 import "./CreateColorSliders.css"
@@ -25,6 +27,9 @@ function postTurnOffRequest() {
 
 function CreateColorSliders() {
     let componentClass = classNames({ 'mainComponent': true })
+    const [rgb, setRgb] = useState([0, 0, 0])
+
+
     return (
         <div className={componentClass}>
             <RgbSlider />

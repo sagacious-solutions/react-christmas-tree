@@ -13,8 +13,6 @@ export default function RgbSlider() {
     const [blue, setBlue] = useState(127)
     let bottomString = `This is the current color (${red}, ${green}, ${blue}).`
 
-    useEffect(() => { console.log("poop") }, [red, green, blue])
-
     return (
         <div>
             <h1 style={headerCss}>Choose Your Color</h1>

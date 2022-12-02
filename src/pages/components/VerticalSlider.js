@@ -1,5 +1,5 @@
 import * as React from 'react';
-import useState from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
@@ -10,7 +10,17 @@ export default function VerticalSlider(props) {
             event.preventDefault();
         }
     }
-    const [value, setValue] = useState(127)
+    const DEFAULT_VALUE = 127
+    const [value, setValue] = useState(DEFAULT_VALUE);
+
+    const changeValue = (event, value) => {
+        setValue(value);
+        props.setColor(value)
+    };
+
+    const updateValue = () => {
+
+    }
 
     return (
         <Box sx={{ height: 300 }}>
@@ -26,7 +36,8 @@ export default function VerticalSlider(props) {
                 onKeyDown={preventHorizontalKeyboardNavigation}
                 min={props.min}
                 max={props.max}
-                onChangeCommitted={props.setColor()}
+                value={value}
+                onChange={changeValue}
             />
         </Box>
     );
