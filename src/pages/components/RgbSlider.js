@@ -11,16 +11,19 @@ export default function RgbSlider() {
     const [red, setRed] = useState(127)
     const [green, setGreen] = useState(127)
     const [blue, setBlue] = useState(127)
+    let bottomString = `This is the current color (${red}, ${green}, ${blue}).`
+
+    useEffect(() => { console.log("poop") }, [red, green, blue])
 
     return (
         <div>
             <h1 style={headerCss}>Choose Your Color</h1>
             <div className={sldrGrpClass}>
-                <VerticalSlider {...sliderSettings} />
-                <VerticalSlider {...sliderSettings} />
-                <VerticalSlider {...sliderSettings} />
+                <VerticalSlider setColor={setRed} {...sliderSettings} />
+                <VerticalSlider setColor={setGreen} {...sliderSettings} />
+                <VerticalSlider setColor={setBlue} {...sliderSettings} />
             </div>
-            {/* <div>{rgbValue}</div > */}
+            <div>{bottomString}</div >
         </div>);
 }
 
