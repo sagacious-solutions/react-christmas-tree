@@ -28,6 +28,9 @@ function CreateColorSliders() {
     let bttnGrpClass = classNames({ 'buttonGroup': true });
     let componentClass = classNames({ 'mainComponent': true });
     let liveButtonClass = classNames({ "socketEnabled": socketEnabled });
+    const setColorButton = <BasicButton onClick={() => postColorRequest(rgb)} buttonText={`Set Tree to RGB(${rgb[0]},${rgb[1]},${rgb[2]})`} style={{ ...buttonStyle, "backgroundColor": `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` }} />
+    const disconnectTreeButton = <BasicButton onClick={() => { setSocketEnabled(false) }} buttonText={"Disconnect from tree."} style={{ ...buttonStyle, "backgroundColor": `black` }} />
+    const leftButton = socketEnabled ? disconnectTreeButton : setColorButton
 
     // useEffect(() => { }, [rgb, socketEnabled])
 
@@ -37,7 +40,7 @@ function CreateColorSliders() {
         <div className={componentClass}>
             <RgbSlider onChange={setRgb} />
             <div className={bttnGrpClass}>
-                <BasicButton onClick={() => postColorRequest(rgb)} buttonText={`Set Tree to RGB(${rgb[0]},${rgb[1]},${rgb[2]})`} style={{ ...buttonStyle, "backgroundColor": `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` }} />
+                {leftButton}
                 <BasicButton className={liveButtonClass} onClick={() => { setSocketEnabled(!socketEnabled) }} buttonText={connectionButtonText} style={{ "backgroundColor": socketEnabled ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : "green" }} />
             </div>
         </div>
