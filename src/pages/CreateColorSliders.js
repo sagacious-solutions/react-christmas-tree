@@ -14,10 +14,6 @@ console.log(WEB_SOCKET_URL)
 
 const webSocket = new WebSocket(WEB_SOCKET_URL, "protocolOne");
 
-webSocket.onopen = (event) => {
-    webSocket.send("Here's some text that the server is urgently awaiting!");
-    console.log("Poop")
-};
 
 const buttonStyle = {}
 
