@@ -8,6 +8,16 @@ import BasicButton from "./components/BasicButton";
 import "./CreateColorSlider.css"
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
+const WEB_SOCKET_URL = process.env.REACT_APP_WEB_SOCKET_URL;
+
+console.log(WEB_SOCKET_URL)
+
+const webSocket = new WebSocket(WEB_SOCKET_URL, "protocolOne");
+
+webSocket.onopen = (event) => {
+    webSocket.send("Here's some text that the server is urgently awaiting!");
+    console.log("Poop")
+};
 
 const buttonStyle = {}
 
@@ -20,6 +30,11 @@ function postColorRequest(color) {
             console.log(error);
         });
 }
+
+function liveControlTreeRGB() {
+}
+
+
 
 function CreateColorSliders() {
     const [rgb, setRgb] = useState([0, 0, 0]);
@@ -37,7 +52,7 @@ function CreateColorSliders() {
             <RgbSlider onChange={setRgb} />
             <div className={bttnGrpClass}>
                 {setColorOrDisconnectButton}
-                <BasicButton className={liveButtonClass} onClick={() => { setSocketEnabled(!socketEnabled) }} buttonText={connectionButtonText} style={{ "backgroundColor": socketEnabled ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : "green" }} />
+                <BasicButton className={liveButtonClass} onClick={() => { setSocketEnabled(!socketEnabled); liveControlTreeRGB() }} buttonText={connectionButtonText} style={{ "backgroundColor": socketEnabled ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : "green" }} />
             </div>
         </div>
     );

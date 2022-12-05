@@ -9,6 +9,12 @@ spirit of this project.
 Bunny for scale.
 
 
+# Live connection via Websockets
+The set custom color page allows for changing the colors with the sliders and seeing
+the tree change instantly as you move the controls.
+
+<img src="./docs/socket_connection.png" width="50%" />
+
 
 # Controller
 <img src="./docs/shelf_controller.jpg" width="50%" />
