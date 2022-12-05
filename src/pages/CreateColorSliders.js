@@ -9,10 +9,10 @@ import "./CreateColorSlider.css"
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 const WEB_SOCKET_URL = process.env.REACT_APP_WEB_SOCKET_URL;
+const socket = new WebSocket(WEB_SOCKET_URL, "protocolOne");
 
 console.log(WEB_SOCKET_URL)
 
-const webSocket = new WebSocket(WEB_SOCKET_URL, "protocolOne");
 
 
 const buttonStyle = {}
@@ -28,6 +28,30 @@ function postColorRequest(color) {
 }
 
 function liveControlTreeRGB() {
+
+    socket.onopen = function (e) {
+        alert("[open] Connection established");
+        alert("Sending to server");
+        socket.send("My name is John");
+    };
+
+    socket.onmessage = function (event) {
+        alert(`[message] Data received from server: ${event.data}`);
+    };
+
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        } else {
+            // e.g. server process killed or network down
+            // event.code is usually 1006 in this case
+            alert('[close] Connection died');
+        }
+    };
+
+    socket.onerror = function (error) {
+        alert(`[error]`);
+    };
 }
 
 
@@ -42,10 +66,12 @@ function CreateColorSliders() {
     const disconnectTreeButton = <BasicButton onClick={() => { setSocketEnabled(false) }} buttonText={"Disconnect from tree."} style={{ ...buttonStyle, "backgroundColor": `black` }} />
     const setColorOrDisconnectButton = socketEnabled ? disconnectTreeButton : setColorButton
     const connectionButtonText = socketEnabled ? `Tree set to RGB(${rgb[0]},${rgb[1]},${rgb[2]})` : "Start Live Connection";
+    const LIVEUPDATE = null
+    const RgbSliderOnChange = socketEnabled ? LIVEUPDATE : setRgb;
 
     return (
         <div className={componentClass}>
-            <RgbSlider onChange={setRgb} />
+            <RgbSlider onChange={RgbSliderOnChange} />
             <div className={bttnGrpClass}>
                 {setColorOrDisconnectButton}
                 <BasicButton className={liveButtonClass} onClick={() => { setSocketEnabled(!socketEnabled); liveControlTreeRGB() }} buttonText={connectionButtonText} style={{ "backgroundColor": socketEnabled ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : "green" }} />
