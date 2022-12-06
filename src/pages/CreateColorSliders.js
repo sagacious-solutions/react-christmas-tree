@@ -30,18 +30,29 @@ function sendColorUpdate(color) {
 function CreateColorSliders() {
     const [rgb, setRgb] = useState([0, 0, 0]);
     const [socketEnabled, setSocketEnabled] = useState(false);
-    const [TimeoutHasPassed, setTimeoutHasPassed] = useState(true);
+    const [timeoutHasPassed, setTimeoutHasPassed] = useState(true);
+    const [serverUnavailable, setServerUnavailable] = useState(false);
     let bttnGrpClass = classNames({ buttonGroup: true });
     let componentClass = classNames({ mainComponent: true });
-    let liveButtonClass = classNames({ socketEnabled: socketEnabled });
+    let liveButtonClass = classNames({
+        serverUnavailable: serverUnavailable,
+    });
     const rgbString = `${rgb[0]},${rgb[1]},${rgb[2]}`;
 
     const connectToSocket = () => {
-        socket = io(CHRISTMAS_TREE_URL);
+        socket = io(CHRISTMAS_TREE_URL, { reconnectionAttempts: 1 });
+
+        socket.on("connect_error", (error) => {
+            setServerUnavailable(true);
+        });
 
         socket.on("connect", () => {
+            sendColorUpdate(rgb);
+            setServerUnavailable(false);
             setSocketEnabled(true);
-            console.log("Connected to server.");
+        });
+        socket.on("disconnect", () => {
+            setSocketEnabled(false);
         });
     };
 
@@ -67,49 +78,49 @@ function CreateColorSliders() {
     const setColorOrDisconnectButton = socketEnabled
         ? disconnectTreeButton
         : setColorButton;
-    const connectionButtonText = socketEnabled
-        ? `Tree set to RGB(${rgbString})`
-        : "Start Live Connection";
-
 
     useEffect(() => {
         // Set timeout before sending further light change requests
         // This is necessary to allow the server time to stop polling and run the routine to
         // change the lights. I feel this isn't necessarily the best strategy as that time
-        // could be effected by other variables. 
-        let TIMEOUT = 100;
-        if (socketEnabled && TimeoutHasPassed) {
+        // could be effected by other variables.
+        let TIMEOUT_MS = 1;
+        if (socketEnabled && timeoutHasPassed) {
             sendColorUpdate(rgb);
             setTimeoutHasPassed(false);
             setTimeout(() => {
                 setTimeoutHasPassed(true);
-            }, TIMEOUT);
+            }, TIMEOUT_MS);
         }
     }, [rgb]);
+
+    let buttonBackground = socketEnabled ? `rgb(${rgbString})` : "green";
+    buttonBackground = serverUnavailable ? "red" : buttonBackground;
+    let connectionButtonText = socketEnabled
+        ? `Tree set to RGB(${rgbString})`
+        : "Start Live Connection";
+    connectionButtonText = serverUnavailable
+        ? "Server Unavailable"
+        : connectionButtonText;
+    const connectionButton = (
+        <BasicButton
+            className={liveButtonClass}
+            onClick={() => {
+                connectToSocket();
+            }}
+            buttonText={connectionButtonText}
+            style={{
+                backgroundColor: buttonBackground,
+            }}
+        />
+    );
 
     return (
         <div className={componentClass}>
             <RgbSlider onChange={setRgb} />
             <div className={bttnGrpClass}>
                 {setColorOrDisconnectButton}
-                <BasicButton
-                    className={liveButtonClass}
-                    onClick={() => {
-                        connectToSocket();
-                    }}
-                    buttonText={connectionButtonText}
-                    style={{
-                        backgroundColor: socketEnabled
-                            ? `rgb(${rgbString})`
-                            : "green",
-                    }}
-                />
-                <BasicButton
-                    onClick={() => {
-                        sendColorUpdate(rgb);
-                    }}
-                    buttonText={"Test"}
-                />
+                {connectionButton}
             </div>
         </div>
     );
