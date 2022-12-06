@@ -8,6 +8,14 @@ spirit of this project.
 
 Bunny for scale.
 
+# Tech-Stack
+ - JavaScript ES6
+ - HTML
+ - CSS
+ - React JS
+ - Socket.io
+ - Material UI
+
 
 # Live connection via Websockets
 The set custom color page allows for changing the colors with the sliders and seeing
