@@ -28,8 +28,10 @@ the tree change instantly as you move the controls.
 
 
 # Controller
-<img src="./docs/shelf_controller.jpg" width="50%" />
-
+<div>
+<img src="./docs/shelf_controller.jpg" width="49%" />
+<img src="./docs/screenmount-cad.png" width="49%" />
+</div>
 Although the tree can be controlled from any local web browser, the project features its own touch screen. This 7 inch touchscreen is powered by a Raspberry Pi 4 and features a 3D printed PLA holder. Using PM2, the React Server is daemonized here for easy updates over SHH from the main dev machine.
 
 
