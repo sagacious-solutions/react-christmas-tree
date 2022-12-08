@@ -4,6 +4,8 @@ React christmas tree is the peak of holiday cheer inducing technology. Featuring
 7 Inch LCD Touch screen and a genuine Douglas Fir tree, you can't escape the Christmas 
 spirit of this project.
 
+See repo <a href="https://github.com/sagacious-solutions/raspberry-xmas-tree">raspberry-xmas-tree</a> for hardware API.
+
 <img src="./docs/holiday_spirit_tree.jpg" width="30%" />
 
 Bunny for scale.
