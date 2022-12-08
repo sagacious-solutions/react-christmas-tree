@@ -17,7 +17,8 @@ Bunny for scale.
  - React JS
  - Socket.io
  - Material UI
-
+ - Ender 3 Pro V2 for Printing Screen Mount
+ - Fusion 360 for Parts Design
 
 # Live connection via Websockets
 The set custom color page allows for changing the colors with the sliders and seeing
