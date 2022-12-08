@@ -20,11 +20,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Palette from "@material-ui/icons/Palette";
 import TextureIcon from "@mui/icons-material/Texture";
 import TuneIcon from "@mui/icons-material/Tune";
+import TrafficIcon from "@material-ui/icons/Traffic";
 
 // Pages
-import SelectPattern from "./pages/SelectPattern";
+import SelectAnimation from "./pages/SelectAnimation";
 import SetSolidPreset from "./pages/SetSolidPreset";
 import CreateColorSliders from "./pages/CreateColorSliders";
+import CustomPattern from "./pages/CustomPattern";
 
 const drawerWidth = 240;
 
@@ -91,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navigation() {
-    var defaultLandingPage = <SelectPattern />;
+    var defaultLandingPage = <SelectAnimation />;
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -163,11 +165,11 @@ export default function Navigation() {
                         button
                         key={"choosePattern"}
                         onClick={() => {
-                            setPage(<SelectPattern />);
+                            setPage(<SelectAnimation />);
                         }}
                     >
                         <ListItemIcon>
-                            <TextureIcon />
+                            <TrafficIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Animated Patterns"} />
                     </ListItem>
@@ -194,6 +196,18 @@ export default function Navigation() {
                             <TuneIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Create Color"} />
+                    </ListItem>
+                    <ListItem
+                        button
+                        key={"CustomPattern"}
+                        onClick={() => {
+                            setPage(<CustomPattern />);
+                        }}
+                    >
+                        <ListItemIcon>
+                            <TextureIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"DIY Patterns"} />
                     </ListItem>
                 </List>
             </Drawer>
