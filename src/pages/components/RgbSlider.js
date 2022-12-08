@@ -12,10 +12,11 @@ export default function RgbSlider(props) {
     const [red, setRed] = useState(127);
     const [green, setGreen] = useState(127);
     const [blue, setBlue] = useState(127);
+    const onChange = props.onChange;
 
     useEffect(() => {
-        props.onChange([red, green, blue]);
-    }, [red, green, blue]);
+        onChange([red, green, blue]);
+    }, [red, green, blue, onChange]);
 
     return (
         <div>

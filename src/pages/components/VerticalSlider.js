@@ -17,8 +17,6 @@ export default function VerticalSlider(props) {
         props.setColor(value);
     };
 
-    const updateValue = () => {};
-
     return (
         <Box sx={{ height: 300 }}>
             <Slider
