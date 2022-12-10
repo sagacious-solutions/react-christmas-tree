@@ -20,10 +20,10 @@ function postTurnOffRequest() {
         });
 }
 
-function SelectPattern() {
+function SelectAnimation() {
     return (
         <div className="SelectPattern">
-            Select the pattern you'd like to use.
+            Select the animation you'd like to see.
             <div>
                 <div>
                     <PatternButton
@@ -58,4 +58,4 @@ function SelectPattern() {
     );
 }
 
-export default SelectPattern;
+export default SelectAnimation;

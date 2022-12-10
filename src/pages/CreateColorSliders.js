@@ -1,4 +1,3 @@
-import axios from "axios";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
@@ -6,22 +5,11 @@ import { io } from "socket.io-client";
 import RgbSlider from "./components/RgbSlider";
 import BasicButton from "./components/BasicButton";
 import "./CreateColorSlider.css";
+import { postColorRequest } from "../serverCommunication";
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
 let socket = null;
-
-const buttonStyle = {};
-
-function postColorRequest(color) {
-    axios
-        .post(CHRISTMAS_TREE_URL + "/setRgbColor/", {
-            color: color,
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 
 function sendColorUpdate(color) {
     socket.emit("set_color", color);
@@ -61,7 +49,6 @@ function CreateColorSliders() {
             onClick={() => postColorRequest(rgb)}
             buttonText={`Set Tree to RGB(${rgbString})`}
             style={{
-                ...buttonStyle,
                 backgroundColor: `rgb(${rgbString})`,
             }}
         />
@@ -72,7 +59,7 @@ function CreateColorSliders() {
                 setSocketEnabled(false);
             }}
             buttonText={"Disconnect from tree."}
-            style={{ ...buttonStyle, backgroundColor: `black` }}
+            style={{ backgroundColor: `black` }}
         />
     );
     const setColorOrDisconnectButton = socketEnabled
