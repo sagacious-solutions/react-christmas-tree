@@ -22,12 +22,12 @@ function generatePatternDots(pattern) {
 
     pattern.forEach((color, index) => {
         avatars.push(
-            <div style={{ marginTop: "0.5em" }}>
+            <div style={{ marginTop: "0.33em" }}>
                 <Avatar
                     key={`color-circle-${index}`}
                     sx={{
                         backgroundColor: color.hex,
-                        marginLeft: index ? "0px" : "10px",
+                        marginLeft: index ? "0px" : "15px",
                     }}
                     children={""}
                 />
@@ -64,13 +64,27 @@ function CustomPattern() {
     return (
         <div>
             Make your own pattern.
-            <SketchPicker onChange={handleColorChange} color={color} />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+                <SketchPicker onChange={handleColorChange} color={color} />
+                <BasicButton
+                    style={{ width: "221px", backgroundColor: "#48AAF1" }}
+                    buttonText={"Preview Color"}
+                    onClick={() => postColorRequest(rgb)}
+                />
+                <BasicButton
+                    style={{ width: "221px" }}
+                    buttonText={"Add color to Pattern"}
+                    onClick={() => setPattern([...pattern, color])}
+                />
+            </div>
             <Stack
                 style={{
                     display: "flex",
                     marginTop: 50,
                     height: "4em",
                     backgroundColor: "grey",
+                    borderRadius: "25px",
+                    border: "3px solid black",
                 }}
                 direction="row"
                 spacing={2}
@@ -84,16 +98,6 @@ function CustomPattern() {
                     justifyContent: "space-evenly",
                 }}
             >
-                <BasicButton
-                    style={{}}
-                    buttonText={"Preview Color"}
-                    onClick={() => postColorRequest(rgb)}
-                />
-                <BasicButton
-                    style={{}}
-                    buttonText={"Add color to Pattern"}
-                    onClick={() => setPattern([...pattern, color])}
-                />
                 <BasicButton
                     style={{}}
                     buttonText={"Set tree to Pattern"}
