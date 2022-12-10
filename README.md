@@ -24,6 +24,11 @@ the tree change instantly as you move the controls.
 <img src="./docs/socket_connection.png" width="50%" />
 
 
+# Create your own light string patterns
+On this page you can create your own light string patterns. By hitting preview color, you can see what it looks like on the tree before commiting to it. Once you hit "Set Tree to Pattern" it will repeat that pattern across the string of lights.
+
+<img src="./docs/choose_pattern_page.png" width="50%" />
+
 # Controller
 <img src="./docs/shelf_controller.jpg" width="50%" />
 
