@@ -12,4 +12,12 @@ function postColorRequest(color) {
         });
 }
 
-export { postColorRequest };
+function postCustomPatternRequest(pattern) {
+    axios
+        .post(CHRISTMAS_TREE_URL + "/setCustomPattern/", { pattern: pattern })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export { postColorRequest, postCustomPatternRequest };
