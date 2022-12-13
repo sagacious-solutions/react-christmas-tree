@@ -17,6 +17,7 @@ Bunny for scale.
  - React JS
  - Socket.io
  - Material UI
+ - Sequelize
  - Ender 3 Pro V2 for Printing Screen Mount
  - Fusion 360 for Parts Design
 
@@ -26,11 +27,15 @@ the tree change instantly as you move the controls.
 
 <img src="./docs/socket_connection.png" width="50%" />
 
+<br>
+<br>
 
 # Create your own light string patterns
 On this page you can create your own light string patterns. By hitting preview color, you can see what it looks like on the tree before commiting to it. Once you hit "Set Tree to Pattern" it will repeat that pattern across the string of lights.
 
 <img src="./docs/choose_pattern_page.png" width="50%" />
+<br>
+<br>
 
 # Controller
 <div>
@@ -38,7 +43,13 @@ On this page you can create your own light string patterns. By hitting preview c
 <img src="./docs/screenmount-cad.png" width="49%" />
 </div>
 Although the tree can be controlled from any local web browser, the project features its own touch screen. This 7 inch touchscreen is powered by a Raspberry Pi 4 and features a 3D printed PLA holder. Using PM2, the React Server is daemonized here for easy updates over SHH from the main dev machine.
+<br>
+<br>
+<br>
+<br>
 
+# Database ERD
+<img src="./docs/erd_devices.png" width="49%" />
 
 # Setup
 
