@@ -20,4 +20,26 @@ function postCustomPatternRequest(pattern) {
         });
 }
 
-export { postColorRequest, postCustomPatternRequest };
+function postAninmationRequest(pattern) {
+    axios
+        .post(CHRISTMAS_TREE_URL + "/setPattern/", {
+            pattern: pattern,
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+function postTurnOffRequest() {
+    axios
+        .post(CHRISTMAS_TREE_URL + "/turnOffLights/", {})
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export {
+    postColorRequest,
+    postCustomPatternRequest,
+    postAninmationRequest,
+    postTurnOffRequest,
+};
