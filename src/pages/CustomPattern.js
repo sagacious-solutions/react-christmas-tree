@@ -59,6 +59,7 @@ function CustomPattern() {
 
     useEffect(() => {
         setRgb(getRgb(color));
+        console.log(color);
     }, [color]);
 
     return (

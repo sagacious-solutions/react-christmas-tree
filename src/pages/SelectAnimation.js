@@ -1,24 +1,11 @@
 import PatternButton from "./components/PatternButton";
+import {
+    postAninmationRequest,
+    postTurnOffRequest,
+} from "../serverCommunication";
 
 import axios from "axios";
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
-
-function postPatternRequest(pattern) {
-    axios
-        .post(CHRISTMAS_TREE_URL + "/setPattern/", {
-            pattern: pattern,
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-function postTurnOffRequest() {
-    axios
-        .post(CHRISTMAS_TREE_URL + "/turnOffLights/", {})
-        .catch(function (error) {
-            console.log(error);
-        });
-}
 
 function SelectAnimation() {
     return (
@@ -28,14 +15,14 @@ function SelectAnimation() {
                 <div>
                     <PatternButton
                         buttonText="Rainbow Cycle"
-                        onClick={() => postPatternRequest("rainbowCycle")}
+                        onClick={() => postAninmationRequest("rainbowCycle")}
                     />
                 </div>
                 <div>
                     <PatternButton
                         buttonText="Slow Random Transition"
                         onClick={() =>
-                            postPatternRequest("slowRandomTransition")
+                            postAninmationRequest("slowRandomTransition")
                         }
                     />
                 </div>
@@ -43,7 +30,7 @@ function SelectAnimation() {
                     <PatternButton
                         buttonText="Fast Random Transition"
                         onClick={() =>
-                            postPatternRequest("fastRandomTransition")
+                            postAninmationRequest("fastRandomTransition")
                         }
                     />
                 </div>

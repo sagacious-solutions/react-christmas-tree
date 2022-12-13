@@ -1,14 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-// In a real app, you should keep the database connection URL as an environment variable.
-// But for this example, we will just use a local SQLite database.
-// const sequelize = new Sequelize(process.env.DB_CONNECTION_URL);
-const sequelize = new Sequelize({
-    dialect: "postgres",
-    storage: "sqlite-example-database/example-db.sqlite",
-    logQueryParameters: true,
-    benchmark: true,
-});
+const sequelize = new Sequelize(process.env.REACT_APP_DB_URL);
 
 const modelDefiners = [require("./models/favoriteColor.model")];
 
@@ -17,6 +9,20 @@ for (const modelDefiner of modelDefiners) {
     modelDefiner(sequelize);
 }
 
+const connectToDb = (url) => {
+    const db = new Sequelize(url);
+    db.authenticate()
+        .then(() => {
+            console.log("Database Connection Failed");
+            return db;
+        })
+        .catch(() => {
+            console.log("Database Connection Failed");
+            return null;
+        });
+};
+
+export { connectToDb };
 // function applyExtraSetup(sequelize) {
 //     const { instrument, orchestra } = sequelize.models;
 
@@ -28,4 +34,3 @@ for (const modelDefiner of modelDefiners) {
 // applyExtraSetup(sequelize);
 
 // We export the sequelize connection instance to be used around our app.
-module.exports = sequelize;
