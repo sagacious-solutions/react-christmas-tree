@@ -1,6 +1,15 @@
 import axios from "axios";
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
+const DB_URL = process.env.REACT_APP_DB_URL;
+
+function sayHello(ip) {
+    return axios.get("http://" + ip + "/bonjour/");
+}
+
+function getDeviceList() {
+    return axios.get(DB_URL + "/getDevices/");
+}
 
 function postColorRequest(color) {
     axios
@@ -42,4 +51,5 @@ export {
     postCustomPatternRequest,
     postAninmationRequest,
     postTurnOffRequest,
+    getDeviceList,
 };

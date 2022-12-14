@@ -2,6 +2,7 @@ import PatternButton from "./components/PatternButton";
 import {
     postAninmationRequest,
     postTurnOffRequest,
+    findAllDevices,
 } from "../serverCommunication";
 
 import axios from "axios";

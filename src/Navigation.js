@@ -15,12 +15,13 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
-// Updated
 import Palette from "@material-ui/icons/Palette";
 import TextureIcon from "@mui/icons-material/Texture";
 import TuneIcon from "@mui/icons-material/Tune";
 import TrafficIcon from "@material-ui/icons/Traffic";
+import PatternButton from "./pages/components/PatternButton";
+
+import { getDeviceList } from "./serverCommunication";
 
 // Pages
 import SelectAnimation from "./pages/SelectAnimation";
@@ -96,6 +97,7 @@ export default function Navigation() {
     var defaultLandingPage = <SelectAnimation />;
     const classes = useStyles();
     const theme = useTheme();
+    const [devices, setDevices] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const [page, setPage] = React.useState(defaultLandingPage);
 
@@ -135,6 +137,12 @@ export default function Navigation() {
                     <Typography variant="h6" noWrap>
                         Christmas Tree Interface
                     </Typography>
+                    <PatternButton
+                        buttonText="Get Devices"
+                        onClick={() => {
+                            getDeviceList().then((res) => console.log(res));
+                        }}
+                    />
                 </Toolbar>
             </AppBar>
             <Drawer
