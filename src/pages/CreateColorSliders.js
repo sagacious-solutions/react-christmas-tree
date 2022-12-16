@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 import RgbSlider from "./components/RgbSlider";
 import BasicButton from "./components/BasicButton";
 import "./CreateColorSlider.css";
-import { postColorRequest } from "../serverCommunication";
+import useServerCommunication from "../serverCommunication";
 
 const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
 
@@ -15,7 +15,8 @@ function sendColorUpdate(color) {
     socket.emit("set_color", color);
 }
 
-function CreateColorSliders() {
+function CreateColorSliders(props) {
+    const { postColorRequest } = useServerCommunication();
     const [rgb, setRgb] = useState([0, 0, 0]);
     const [socketEnabled, setSocketEnabled] = useState(false);
     const [timeoutHasPassed, setTimeoutHasPassed] = useState(true);
@@ -46,7 +47,7 @@ function CreateColorSliders() {
 
     const setColorButton = (
         <BasicButton
-            onClick={() => postColorRequest(rgb)}
+            onClick={() => postColorRequest(rgb, props.currentDevice)}
             buttonText={`Set Tree to RGB(${rgbString})`}
             style={{
                 backgroundColor: `rgb(${rgbString})`,

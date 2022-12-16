@@ -2,13 +2,8 @@ import { useEffect, useState } from "react";
 import BasicButton from "./components/BasicButton";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import {
-    postColorRequest,
-    postCustomPatternRequest,
-} from "../serverCommunication";
+import useServerCommunication from "../serverCommunication";
 import { SketchPicker } from "react-color";
-
-const buttonStyle = {};
 
 function getRgb(color) {
     const r = color.rgb.r;
@@ -38,17 +33,9 @@ function generatePatternDots(pattern) {
     return avatars;
 }
 
-function sendPatternToServer(pattern) {
-    const rgbList = [];
-
-    pattern.forEach((color) => {
-        rgbList.push([color.rgb.r, color.rgb.g, color.rgb.b]);
-    });
-
-    postCustomPatternRequest(rgbList);
-}
-
-function CustomPattern() {
+function CustomPattern(props) {
+    const { postColorRequest, postCustomPatternRequest } =
+        useServerCommunication();
     const [pattern, setPattern] = useState([]);
     const [color, setColor] = useState({ rgb: { r: 50, g: 0, b: 0 } });
     const [rgb, setRgb] = useState(0);
@@ -57,6 +44,16 @@ function CustomPattern() {
         setColor(color);
     };
 
+    
+    function sendPatternToServer(pattern) {
+        const rgbList = [];
+
+        pattern.forEach((color) => {
+            rgbList.push([color.rgb.r, color.rgb.g, color.rgb.b]);
+        });
+        postCustomPatternRequest(rgbList, props.currentDevice);
+    }
+
     useEffect(() => {
         setRgb(getRgb(color));
         console.log(color);
@@ -64,13 +61,13 @@ function CustomPattern() {
 
     return (
         <div>
-            Make your own pattern.
+            <h2>Make your own pattern.</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <SketchPicker onChange={handleColorChange} color={color} />
                 <BasicButton
                     style={{ width: "221px", backgroundColor: "#48AAF1" }}
                     buttonText={"Preview Color"}
-                    onClick={() => postColorRequest(rgb)}
+                    onClick={() => postColorRequest(rgb, props.currentDevice)}
                 />
                 <BasicButton
                     style={{ width: "221px" }}
@@ -101,7 +98,7 @@ function CustomPattern() {
             >
                 <BasicButton
                     style={{}}
-                    buttonText={"Set tree to Pattern"}
+                    buttonText={"Set device to Pattern"}
                     onClick={() => sendPatternToServer(pattern)}
                 />
                 <BasicButton

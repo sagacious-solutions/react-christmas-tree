@@ -1,14 +1,11 @@
 import PatternButton from "./components/PatternButton";
-import {
-    postAninmationRequest,
-    postTurnOffRequest,
-    findAllDevices,
-} from "../serverCommunication";
 
-import axios from "axios";
-const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
+import useServerCommunication from "../serverCommunication";
 
-function SelectAnimation() {
+function SelectAnimation(props) {
+    const { postAninmationRequest, postTurnOffRequest } =
+        useServerCommunication();
+
     return (
         <div className="SelectPattern">
             Select the animation you'd like to see.
@@ -16,14 +13,23 @@ function SelectAnimation() {
                 <div>
                     <PatternButton
                         buttonText="Rainbow Cycle"
-                        onClick={() => postAninmationRequest("rainbowCycle")}
+                        onClick={() => {
+                            console.log(props);
+                            postAninmationRequest(
+                                "rainbowCycle",
+                                props.currentDevice
+                            );
+                        }}
                     />
                 </div>
                 <div>
                     <PatternButton
                         buttonText="Slow Random Transition"
                         onClick={() =>
-                            postAninmationRequest("slowRandomTransition")
+                            postAninmationRequest(
+                                "slowRandomTransition",
+                                props.currentDevice
+                            )
                         }
                     />
                 </div>
@@ -31,14 +37,17 @@ function SelectAnimation() {
                     <PatternButton
                         buttonText="Fast Random Transition"
                         onClick={() =>
-                            postAninmationRequest("fastRandomTransition")
+                            postAninmationRequest(
+                                "fastRandomTransition",
+                                props.currentDevice
+                            )
                         }
                     />
                 </div>
                 <div>
                     <PatternButton
                         buttonText="Turn Off"
-                        onClick={postTurnOffRequest}
+                        onClick={() => postTurnOffRequest(props.currentDevice)}
                     />
                 </div>
             </div>

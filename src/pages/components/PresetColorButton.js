@@ -12,7 +12,7 @@ export default function PresetColorButton(props) {
                 color: props.textColor,
             }}
             variant="contained"
-            onClick={() => props.onClick(props.colorName)}
+            onClick={props.onClick}
         >
             {props.buttonText}
         </Button>
