@@ -2,13 +2,9 @@ import PatternButton from "./components/PatternButton";
 import {
     postAninmationRequest,
     postTurnOffRequest,
-    findAllDevices,
 } from "../serverCommunication";
 
-import axios from "axios";
-const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
-
-function SelectAnimation() {
+function SelectAnimation(props) {
     return (
         <div className="SelectPattern">
             Select the animation you'd like to see.
@@ -16,14 +12,22 @@ function SelectAnimation() {
                 <div>
                     <PatternButton
                         buttonText="Rainbow Cycle"
-                        onClick={() => postAninmationRequest("rainbowCycle")}
+                        onClick={() =>
+                            postAninmationRequest(
+                                "rainbowCycle",
+                                props.currentDevice
+                            )
+                        }
                     />
                 </div>
                 <div>
                     <PatternButton
                         buttonText="Slow Random Transition"
                         onClick={() =>
-                            postAninmationRequest("slowRandomTransition")
+                            postAninmationRequest(
+                                "slowRandomTransition",
+                                props.currentDevice
+                            )
                         }
                     />
                 </div>
@@ -31,7 +35,10 @@ function SelectAnimation() {
                     <PatternButton
                         buttonText="Fast Random Transition"
                         onClick={() =>
-                            postAninmationRequest("fastRandomTransition")
+                            postAninmationRequest(
+                                "fastRandomTransition",
+                                props.currentDevice
+                            )
                         }
                     />
                 </div>
