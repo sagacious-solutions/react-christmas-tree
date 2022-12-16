@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -20,14 +20,19 @@ import TextureIcon from "@mui/icons-material/Texture";
 import TuneIcon from "@mui/icons-material/Tune";
 import TrafficIcon from "@material-ui/icons/Traffic";
 import PatternButton from "./pages/components/PatternButton";
-
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import "reactjs-popup/dist/index.css";
 import { getDeviceList } from "./serverCommunication";
-
 // Pages
 import SelectAnimation from "./pages/SelectAnimation";
 import SetSolidPreset from "./pages/SetSolidPreset";
 import CreateColorSliders from "./pages/CreateColorSliders";
 import CustomPattern from "./pages/CustomPattern";
+
+import AddNewDevicePopup from "./pages/components/AddNewDevicePopup";
+
+import { DictToDeviceList } from "./DisplayDevice";
 
 const drawerWidth = 240;
 
@@ -98,8 +103,11 @@ export default function Navigation() {
     const classes = useStyles();
     const theme = useTheme();
     const [devices, setDevices] = React.useState([]);
+    const [dropdownList, setDropdownList] = React.useState([]);
+    const [currentDevice, setCurrentDevice] = React.useState();
     const [open, setOpen] = React.useState(false);
     const [page, setPage] = React.useState(defaultLandingPage);
+    const [newDevicePopupOpen, setNewDevicePopupOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -109,9 +117,38 @@ export default function Navigation() {
         setOpen(false);
     };
 
-    const displayPage = () => {
-        return page;
-    };
+    useEffect(() => {
+        getDeviceList()
+            .then((res) => setDevices(DictToDeviceList(res.data)))
+            .catch((_err) => {});
+    }, [newDevicePopupOpen]);
+
+    useEffect(() => {
+        const deviceOptions = devices.map((d) => {
+            return {
+                value: d.ip_address,
+                label: `${d.name} - ${d.ip_address}`,
+            };
+        });
+        setDropdownList(deviceOptions);
+        if (dropdownList.length) {
+            setCurrentDevice(dropdownList[0].value);
+        }
+    }, [devices]);
+
+    let dropdown =
+        devices.length > 0 ? (
+            <Dropdown
+                options={dropdownList}
+                value={currentDevice}
+                onChange={(dropValue) => {
+                    setCurrentDevice(dropValue.value);
+                }}
+                placeholder="Select a Device"
+            />
+        ) : (
+            <>No Devices Available</>
+        );
 
     return (
         <div className={classes.root}>
@@ -135,13 +172,18 @@ export default function Navigation() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Christmas Tree Interface
+                        RGB Everywhere
                     </Typography>
+                    {dropdown}
+                    <AddNewDevicePopup
+                        open={newDevicePopupOpen}
+                        closePopup={() => setNewDevicePopupOpen(false)}
+                    />
                     <PatternButton
-                        buttonText="Get Devices"
-                        onClick={() => {
-                            getDeviceList().then((res) => console.log(res));
-                        }}
+                        buttonText="Add New Device"
+                        onClick={() =>
+                            setNewDevicePopupOpen(!newDevicePopupOpen)
+                        }
                     />
                 </Toolbar>
             </AppBar>
@@ -173,7 +215,11 @@ export default function Navigation() {
                         button
                         key={"choosePattern"}
                         onClick={() => {
-                            setPage(<SelectAnimation />);
+                            setPage(
+                                <SelectAnimation
+                                    currentDevice={currentDevice}
+                                />
+                            );
                         }}
                     >
                         <ListItemIcon>
@@ -185,7 +231,9 @@ export default function Navigation() {
                         button
                         key={"choosePresetColor"}
                         onClick={() => {
-                            setPage(<SetSolidPreset />);
+                            setPage(
+                                <SetSolidPreset currentDevice={currentDevice} />
+                            );
                         }}
                     >
                         <ListItemIcon>
@@ -197,7 +245,11 @@ export default function Navigation() {
                         button
                         key={"CreateColorSliders"}
                         onClick={() => {
-                            setPage(<CreateColorSliders />);
+                            setPage(
+                                <CreateColorSliders
+                                    currentDevice={currentDevice}
+                                />
+                            );
                         }}
                     >
                         <ListItemIcon>
@@ -209,7 +261,9 @@ export default function Navigation() {
                         button
                         key={"CustomPattern"}
                         onClick={() => {
-                            setPage(<CustomPattern />);
+                            setPage(
+                                <CustomPattern currentDevice={currentDevice} />
+                            );
                         }}
                     >
                         <ListItemIcon>
@@ -221,7 +275,8 @@ export default function Navigation() {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                {displayPage()}
+
+                {page}
             </main>
         </div>
     );
