@@ -15,7 +15,7 @@ function sendColorUpdate(color) {
     socket.emit("set_color", color);
 }
 
-function CreateColorSliders() {
+function CreateColorSliders(props) {
     const { postColorRequest } = useServerCommunication();
     const [rgb, setRgb] = useState([0, 0, 0]);
     const [socketEnabled, setSocketEnabled] = useState(false);
@@ -47,7 +47,7 @@ function CreateColorSliders() {
 
     const setColorButton = (
         <BasicButton
-            onClick={() => postColorRequest(rgb)}
+            onClick={() => postColorRequest(rgb, props.currentDevice)}
             buttonText={`Set Tree to RGB(${rgbString})`}
             style={{
                 backgroundColor: `rgb(${rgbString})`,

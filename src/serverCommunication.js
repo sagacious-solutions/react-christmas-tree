@@ -1,11 +1,8 @@
 import axios from "axios";
 
-const BOOKSHELF_URL = "http://192.168.1.212:5000";
 const DB_URL = process.env.REACT_APP_DB_URL;
 
 export default function useServerCommunication() {
-    // const { appState } = useApplicationData();
-
     function sayHello(ip) {
         return axios.get("http://" + ip + ":5000/bonjour/");
     }
@@ -37,9 +34,11 @@ export default function useServerCommunication() {
             });
     }
 
-    function postCustomPatternRequest(pattern) {
+    function postCustomPatternRequest(pattern, device) {
         axios
-            .post(BOOKSHELF_URL + "/setCustomPattern/", { pattern: pattern })
+            .post(`http://${device}:5000/setCustomPattern/`, {
+                pattern: pattern,
+            })
             .catch(function (error) {
                 console.log(error);
             });

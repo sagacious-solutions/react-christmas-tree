@@ -33,7 +33,7 @@ function generatePatternDots(pattern) {
     return avatars;
 }
 
-function CustomPattern() {
+function CustomPattern(props) {
     const { postColorRequest, postCustomPatternRequest } =
         useServerCommunication();
     const [pattern, setPattern] = useState([]);
@@ -44,14 +44,14 @@ function CustomPattern() {
         setColor(color);
     };
 
+    
     function sendPatternToServer(pattern) {
         const rgbList = [];
 
         pattern.forEach((color) => {
             rgbList.push([color.rgb.r, color.rgb.g, color.rgb.b]);
         });
-
-        postCustomPatternRequest(rgbList);
+        postCustomPatternRequest(rgbList, props.currentDevice);
     }
 
     useEffect(() => {
@@ -61,13 +61,13 @@ function CustomPattern() {
 
     return (
         <div>
-            Make your own pattern.
+            <h2>Make your own pattern.</h2>
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <SketchPicker onChange={handleColorChange} color={color} />
                 <BasicButton
                     style={{ width: "221px", backgroundColor: "#48AAF1" }}
                     buttonText={"Preview Color"}
-                    onClick={() => postColorRequest(rgb)}
+                    onClick={() => postColorRequest(rgb, props.currentDevice)}
                 />
                 <BasicButton
                     style={{ width: "221px" }}
@@ -98,7 +98,7 @@ function CustomPattern() {
             >
                 <BasicButton
                     style={{}}
-                    buttonText={"Set tree to Pattern"}
+                    buttonText={"Set device to Pattern"}
                     onClick={() => sendPatternToServer(pattern)}
                 />
                 <BasicButton

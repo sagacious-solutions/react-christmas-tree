@@ -5,6 +5,7 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
+import Box from "@mui/material/Box";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -99,10 +100,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navigation() {
-    const { appState, setCurrentDevice } = useApplicationData();
+    const { appState, setCurrentDevice, setDevices } = useApplicationData();
     const classes = useStyles();
     const theme = useTheme();
-    const [devices, setDevices] = React.useState([]);
     const [dropdownList, setDropdownList] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const [page, setPage] = React.useState("animation");
@@ -137,7 +137,7 @@ export default function Navigation() {
     }, [newDevicePopupOpen]);
 
     useEffect(() => {
-        const deviceOptions = devices.map((d) => {
+        const deviceOptions = appState.devices.map((d) => {
             return {
                 value: d.ip_address,
                 label: `${d.name} - ${d.ip_address}`,
@@ -147,15 +147,12 @@ export default function Navigation() {
         if (dropdownList.length) {
             setCurrentDevice(dropdownList[0].value);
         }
-    }, [devices]);
-
-    // useEffect(() => {
-    //     setPage(<SelectAnimation appState={appState} />);
-    // }, [setCurrentDevice]);
+    }, [appState.devices]);
 
     let dropdown =
-        devices.length > 0 ? (
+        appState.devices.length > 0 ? (
             <Dropdown
+                style={{ width: "10%" }}
                 options={dropdownList}
                 value={appState.currentDevice}
                 onChange={(dropValue) => {
@@ -191,6 +188,11 @@ export default function Navigation() {
                     <Typography variant="h6" noWrap>
                         RGB Everywhere
                     </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Typography variant="h6" noWrap>
+                        Current Device :
+                    </Typography>
+                    <Box sx={{ flexGrow: 0.025 }} />
                     {dropdown}
                     <AddNewDevicePopup
                         open={newDevicePopupOpen}
