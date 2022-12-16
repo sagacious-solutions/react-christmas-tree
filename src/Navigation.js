@@ -23,17 +23,17 @@ import PatternButton from "./pages/components/PatternButton";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "reactjs-popup/dist/index.css";
-import { getDeviceList } from "./serverCommunication";
+import AddNewDevicePopup from "./pages/components/AddNewDevicePopup";
 // Pages
 import SelectAnimation from "./pages/SelectAnimation";
 import SetSolidPreset from "./pages/SetSolidPreset";
 import CreateColorSliders from "./pages/CreateColorSliders";
 import CustomPattern from "./pages/CustomPattern";
 
-import AddNewDevicePopup from "./pages/components/AddNewDevicePopup";
-
 import { DictToDeviceList } from "./DisplayDevice";
+import useServerCommunication from "./serverCommunication";
 
+import useApplicationData from "./hooks/useApplicationData";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -99,15 +99,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navigation() {
-    var defaultLandingPage = <SelectAnimation />;
+    const { appState, setCurrentDevice } = useApplicationData();
     const classes = useStyles();
     const theme = useTheme();
     const [devices, setDevices] = React.useState([]);
     const [dropdownList, setDropdownList] = React.useState([]);
-    const [currentDevice, setCurrentDevice] = React.useState();
     const [open, setOpen] = React.useState(false);
-    const [page, setPage] = React.useState(defaultLandingPage);
+    const [page, setPage] = React.useState("animation");
     const [newDevicePopupOpen, setNewDevicePopupOpen] = React.useState(false);
+    const { getDeviceList } = useServerCommunication();
+
+    const pages = {
+        animation: <SelectAnimation currentDevice={appState.currentDevice} />,
+        SetSolidPreset: (
+            <SetSolidPreset currentDevice={appState.currentDevice} />
+        ),
+        CreateColorSliders: (
+            <CreateColorSliders currentDevice={appState.currentDevice} />
+        ),
+        CustomPattern: <CustomPattern currentDevice={appState.currentDevice} />,
+    };
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -119,9 +130,11 @@ export default function Navigation() {
 
     useEffect(() => {
         getDeviceList()
-            .then((res) => setDevices(DictToDeviceList(res.data)))
+            .then((res) => {
+                setDevices(DictToDeviceList(res.data));
+            })
             .catch((_err) => {});
-    }, [newDevicePopupOpen]);
+    }, [newDevicePopupOpen, getDeviceList]);
 
     useEffect(() => {
         const deviceOptions = devices.map((d) => {
@@ -140,7 +153,7 @@ export default function Navigation() {
         devices.length > 0 ? (
             <Dropdown
                 options={dropdownList}
-                value={currentDevice}
+                value={appState.currentDevice}
                 onChange={(dropValue) => {
                     setCurrentDevice(dropValue.value);
                 }}
@@ -215,11 +228,7 @@ export default function Navigation() {
                         button
                         key={"choosePattern"}
                         onClick={() => {
-                            setPage(
-                                <SelectAnimation
-                                    currentDevice={currentDevice}
-                                />
-                            );
+                            setPage("animation");
                         }}
                     >
                         <ListItemIcon>
@@ -231,9 +240,7 @@ export default function Navigation() {
                         button
                         key={"choosePresetColor"}
                         onClick={() => {
-                            setPage(
-                                <SetSolidPreset currentDevice={currentDevice} />
-                            );
+                            setPage("SetSolidPreset");
                         }}
                     >
                         <ListItemIcon>
@@ -245,11 +252,7 @@ export default function Navigation() {
                         button
                         key={"CreateColorSliders"}
                         onClick={() => {
-                            setPage(
-                                <CreateColorSliders
-                                    currentDevice={currentDevice}
-                                />
-                            );
+                            setPage("CreateColorSliders");
                         }}
                     >
                         <ListItemIcon>
@@ -261,9 +264,7 @@ export default function Navigation() {
                         button
                         key={"CustomPattern"}
                         onClick={() => {
-                            setPage(
-                                <CustomPattern currentDevice={currentDevice} />
-                            );
+                            setPage("CustomPattern");
                         }}
                     >
                         <ListItemIcon>
@@ -276,7 +277,7 @@ export default function Navigation() {
             <main className={classes.content}>
                 <div className={classes.toolbar} />
 
-                {page}
+                {pages[page]}
             </main>
         </div>
     );

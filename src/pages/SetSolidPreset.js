@@ -1,7 +1,6 @@
 import PresetColorButton from "./components/PresetColorButton";
 
-import axios from "axios";
-const CHRISTMAS_TREE_URL = process.env.REACT_APP_CHRISTMAS_TREE_URL;
+import useServerCommunication from "../serverCommunication";
 
 const buttonDetails = [
     // colorName is passed in the post request to get the correct color
@@ -85,35 +84,29 @@ const buttonDetails = [
     },
 ];
 
-function postColorRequest(color) {
-    axios
-        .post(CHRISTMAS_TREE_URL + "/setSolidPreset/", {
-            color: color,
-        })
-        .catch(function (error) {
-            console.log(error);
+function SetSolidPreset(props) {
+    const { postSetSolidPreset } = useServerCommunication();
+
+    let generateButtons = (currentDevice) => {
+        let html = buttonDetails.map((button) => {
+            return (
+                <PresetColorButton
+                    key={button.colorName}
+                    {...button}
+                    onClick={() => {
+                        postSetSolidPreset(button.colorName, currentDevice);
+                    }}
+                />
+            );
         });
-}
 
-let generateButtons = () => {
-    let html = buttonDetails.map((button) => {
-        return (
-            <PresetColorButton
-                key={button.colorName}
-                {...button}
-                onClick={postColorRequest}
-            />
-        );
-    });
+        return html;
+    };
 
-    return html;
-};
-
-function SetSolidPreset() {
     return (
         <div className="SelectPattern">
             Select the color you'd like to see.
-            <div>{generateButtons()}</div>
+            <div>{generateButtons(props.currentDevice)}</div>
         </div>
     );
 }

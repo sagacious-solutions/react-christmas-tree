@@ -2,7 +2,7 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Popup from "reactjs-popup";
 import BasicButton from "./BasicButton";
-import { sayHello, postNewDevice } from "../../serverCommunication";
+import useServerCommunication from "../../serverCommunication";
 
 function isRgbValueValid(value) {
     const validRGBValues = ["rgb"];
@@ -10,6 +10,7 @@ function isRgbValueValid(value) {
 }
 
 export default function AddNewDevicePopup(props) {
+    const { sayHello, postNewDevice } = useServerCommunication();
     const [state, setState] = useState({
         name: "",
         description: "",

@@ -1,10 +1,11 @@
 import PatternButton from "./components/PatternButton";
-import {
-    postAninmationRequest,
-    postTurnOffRequest,
-} from "../serverCommunication";
+
+import useServerCommunication from "../serverCommunication";
 
 function SelectAnimation(props) {
+    const { postAninmationRequest, postTurnOffRequest } =
+        useServerCommunication();
+
     return (
         <div className="SelectPattern">
             Select the animation you'd like to see.
@@ -12,12 +13,13 @@ function SelectAnimation(props) {
                 <div>
                     <PatternButton
                         buttonText="Rainbow Cycle"
-                        onClick={() =>
+                        onClick={() => {
+                            console.log(props);
                             postAninmationRequest(
                                 "rainbowCycle",
                                 props.currentDevice
-                            )
-                        }
+                            );
+                        }}
                     />
                 </div>
                 <div>
@@ -45,7 +47,7 @@ function SelectAnimation(props) {
                 <div>
                     <PatternButton
                         buttonText="Turn Off"
-                        onClick={postTurnOffRequest}
+                        onClick={() => postTurnOffRequest(props.currentDevice)}
                     />
                 </div>
             </div>
