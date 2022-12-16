@@ -134,7 +134,7 @@ export default function Navigation() {
                 setDevices(DictToDeviceList(res.data));
             })
             .catch((_err) => {});
-    }, [newDevicePopupOpen, getDeviceList]);
+    }, [newDevicePopupOpen]);
 
     useEffect(() => {
         const deviceOptions = devices.map((d) => {
@@ -148,6 +148,10 @@ export default function Navigation() {
             setCurrentDevice(dropdownList[0].value);
         }
     }, [devices]);
+
+    // useEffect(() => {
+    //     setPage(<SelectAnimation appState={appState} />);
+    // }, [setCurrentDevice]);
 
     let dropdown =
         devices.length > 0 ? (
