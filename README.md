@@ -1,5 +1,7 @@
 # react-christmas-tree
 
+# React Christmas Tree has been replaced by <a href="https://github.com/sagacious-solutions/rgb-everywhere-web-interface">RGB Everywhere</a>!!! Please click the link to see the latest and greatest version.
+
 React christmas tree is the peak of holiday cheer inducing technology. Featuring a 
 7 Inch LCD Touch screen and a genuine Douglas Fir tree, you can't escape the Christmas 
 spirit of this project.
